@@ -1,0 +1,238 @@
+<div class="contentMetaMediaViewer">
+    <div class="metaMediaViewer modal-preview animate-modal-preview {{metaMediaViewer.options.customClass}} {{metaMediaViewer.options.theme}} {{metaMediaViewer.modalMode ? 'modal-mode' : ''}}" style="height:{{metaMediaViewer.contentHeight}}">
+        <div class="box-numNav" ng-if="metaMediaViewer.totalMedias>1">
+            <!--<uib-pagination total-items="metaMediaViewer.totalMedias" ng-model="metaMediaViewer.currentMedia" class="pagination-sm" boundary-links="true" first-text="Inizio" rotate="true" force-ellipses="true" last-text="Fine" items-per-page="1" max-size="10" direction-links="false" ></uib-pagination>-->
+        </div>
+        <div class="header noselect">
+            <div class="box-btnHeader box-btnHeader-left">
+                <!--<a class="btn-grid btnHeader" ng-class="{'active':metaMediaViewer.panelActive}" ng-click="metaMediaViewer.panelActive=metaMediaViewer.toggleEle(metaMediaViewer.panelActive)">
+                    <span class="fa fa-th-large"></span>
+                </a>-->
+                <a class="btn-indice btnHeader {{metaMediaViewer.btnOptions.index}}" 
+                    ng-class="{'active':metaMediaViewer.indexActive, 'disabled':!metaMediaViewer.index}" 
+                    ng-click="metaMediaViewer.indexActive= metaMediaViewer.index && metaMediaViewer.toggleEle(metaMediaViewer.indexActive)" 
+                    ng-show="metaMediaViewer.enableIndex()">
+                    <span class="icon-vw-list"></span>
+                </a>
+                <a class="separator {{metaMediaViewer.btnOptions.separatorIndex}}" ng-if="metaMediaViewer.index"></a>
+                <a class="btn-info btnHeader {{metaMediaViewer.btnOptions.info}}" 
+                    ng-class="{'active':metaMediaViewer.infoActive, 'disabled':!metaMediaViewer.infoMedia}" ng-click="metaMediaViewer.infoActive=metaMediaViewer.infoMedia && metaMediaViewer.toggleEle(metaMediaViewer.infoActive)">
+                    <span class="icon-vw-info-circle"></span>
+                </a>
+                <a class="btn-text btnHeader disabled {{metaMediaViewer.btnOptions.text}}"
+                    ng-show="metaMediaViewer.view==='single-page' || metaMediaViewer.view==='single-zoom'">
+                    <span class="icon-vw-text"></span>
+                </a>
+                <a class="btn-text-search btnHeader disabled {{metaMediaViewer.btnOptions.text_search}}">
+                    <span class="icon-vw-file-view"></span>
+                </a>
+                <a class="btn-download btnHeader disabled {{metaMediaViewer.btnOptions.download}}" ng-show="metaMediaViewer.view==='single-page' || metaMediaViewer.view==='single-zoom'" href="">
+                    <span class="icon-vw-download"></span>
+                </a>
+                <a class="btn-shop btnHeader" 
+                    ng-click="metaMediaViewer.manageEcommerce()"
+                    ng-class="{'active':metaMediaViewer.showEcommerce}"
+                    ng-show="metaMediaViewer.showBtnEcommerce && (metaMediaViewer.view==='single-page' || metaMediaViewer.view==='single-zoom')">
+                    <span class="icon-vw-shopping-cart"></span>
+                </a>
+                <a class="separator {{metaMediaViewer.btnOptions.separatorActions}}"></a>
+                <a class="btn-list-grid btnHeader" 
+                    ng-if="!metaMediaViewer.singleMetadato"
+                    ng-class="{'active':metaMediaViewer.view==='grid'}" ng-click="metaMediaViewer.setView('grid')">
+                    <span class="icon-vw-th"></span>
+                </a>
+                <a class="btn-list-single btnHeader {{metaMediaViewer.btnOptions.single}}" ng-class="{'active':metaMediaViewer.view==='single-page'}" ng-click="metaMediaViewer.setView('single-page')">
+                   <span class="icon-vw-file"></span>
+                </a>
+                <a class="btn-list-singleZoom btnHeader {{metaMediaViewer.btnOptions.singleZoom}}" ng-class="{'active':metaMediaViewer.view==='single-zoom'}" ng-click="metaMediaViewer.setView('single-zoom')" ng-if="metaMediaViewer.media.tile">
+                   <span class="icon-vw-file-view-simple"></span>
+                </a>
+                <a class="btn-list-double btnHeader {{metaMediaViewer.btnOptions.double}}" ng-class="{'active':metaMediaViewer.view==='double-page'}" ng-click="metaMediaViewer.setView('double-page')" ng-if="!metaMediaViewer.singleMetadato">
+                    <span class="icon-vw-double-page"></span>
+                </a>
+                <a class="btn-list-rullo btnHeader {{metaMediaViewer.btnOptions.rullo}}" ng-class="{'active':metaMediaViewer.view==='rullo'}" ng-click="metaMediaViewer.setView('rullo')" ng-if="!metaMediaViewer.singleMetadato">
+                    <span class="icon-vw-vertical-page"></span>
+                </a>
+                <a class="separator {{metaMediaViewer.btnOptions.separatorViews}}"></a>
+                <a class="btn-social btnHeader disabled {{metaMediaViewer.btnOptions.social}}" >
+                    <span class="icon-vw-share"></span>
+                </a>
+                <a class="separator {{metaMediaViewer.btnOptions.separatorSocial}}"></a>
+            </div>
+            <div class="box-btnHeader box-btnHeader-center">
+                <div class="content-pagination-header" 
+                ng-if="metaMediaViewer.pagination.position==='header'"
+                ng-class="{'content-pagination-double': metaMediaViewer.view==='double-page'}">
+                    <pagination-component></pagination-component>
+                </div>
+            </div>
+            <div class="box-btnHeader box-btnHeader-right" 
+                ng-show="metaMediaViewer.media.type === 'IMAGE' && metaMediaViewer.view==='single-page'">
+
+                <a class="btn-zoom btnHeader" ng-click="metaMediaViewer.checkZoom('out')">
+                    <span class="icon-vw-search-minus"></span>
+                </a>
+                <a class="btn-home btnHeader" ng-click="metaMediaViewer.checkZoom('home');metaMediaViewer.rotate.init();">
+                    <i class="fa fa-square-o"></i>
+                </a>
+                <a class="btn-zoom btnHeader" ng-click="metaMediaViewer.checkZoom('in')">
+                    <span class="icon-vw-search-plus"></span>
+                </a>
+                <a class="separator"></a>
+                <a class="btn-rotate btnHeader" ng-click="metaMediaViewer.checkRotate('left')" ng-show="metaMediaViewer.zoomSupported">
+                    <span class="icon-vw-undo"></span>
+                </a>
+                <a class="btn-rotate btnHeader" ng-click="metaMediaViewer.checkRotate('right')" ng-show="metaMediaViewer.zoomSupported">
+                    <i class="icon-vw-rotate-right"></i>
+                </a>
+            </div>
+            <div class="box-btnHeader box-btnHeader-right" 
+                ng-show="metaMediaViewer.view==='single-zoom'">
+
+                <a class="btn-zoom btnHeader" id="osd-zoom-out">
+                    <span class="icon-vw-search-minus"></span>
+                </a>
+                <a class="btn-home btnHeader" id="osd-home" ng-click="metaMediaViewer.rotate.init();">
+                    <i class="fa fa-square-o"></i>
+                </a>
+                <a class="btn-modal btnHeader" id="osd-full-page">
+                    <i class="icon-vw-expand" ng-if="!metaMediaViewer.modalMode"></i>
+                    <i class="fa fa-compress" ng-if="metaMediaViewer.modalMode"></i>
+                </a>
+                <a class="btn-zoom btnHeader" id="osd-zoom-in">
+                    <span class="icon-vw-search-plus"></span>
+                </a>
+                <a class="separator"></a>
+                <a class="btn-rotate btnHeader" id="osd-rotate-left" ng-click="metaMediaViewer.checkRotate('left')">
+                    <span class="icon-vw-undo"></span>
+                </a>
+                <a class="btn-rotate btnHeader" id="osd-rotate-right" ng-click="metaMediaViewer.checkRotate('right')">
+                    <i class="icon-vw-rotate-right"></i>
+                </a>
+            </div>
+            <div class="btn-close" ng-if="metaMediaViewer.options.btnClose" ng-click="metaMediaViewer.close()">
+                <span class="fa fa-times"></span>
+            </div>
+        </div>
+        <div class="panel-left">
+            <div class="box-index" ng-show="metaMediaViewer.indexActive && metaMediaViewer.enableIndex()">
+                <!-- <div class="box-view-all" ng-click="metaMediaViewer.loadEleFolder('all')" tooltips tooltip-template="{{metaMediaViewer.title}}" tooltip-side="bottom">
+                    {{metaMediaViewer.title | characters:60}}
+                </div> -->
+                <dam-collection-manager datainstance="viewerIndex" tree-config="metaMediaViewer.treeConfig"></dam-collection-manager>
+            </div>
+            <div class="box-info" ng-show="metaMediaViewer.infoActive" ng-bind-html="metaMediaViewer.infoMedia"></div>
+            <!--<div class="box-mediaThumb" ng-class="{'active':metaMediaViewer.currentMedia===$index+1}" ng-repeat="media in metaMediaViewer.medias" ng-click="metaMediaViewer.setMedia($index+1)">
+                <div class="img-middle-responsive">
+                    <div class="responsive-container" >
+                        <div class="dummy"></div>
+                        <div class="img-container">
+                            <div class="centerer"></div>
+                            <img ng-src="{{media.thumbnail}}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <div class="body" ng-class="{'index-info-active':metaMediaViewer.indexActive && metaMediaViewer.infoActive, 'info-active':metaMediaViewer.infoActive, 'index-active':metaMediaViewer.indexActive}"
+        style="{{metaMediaViewer.bodyStyle}}">
+            <!--<div class="box-btnNav box-btnNav-left" ng-if="metaMediaViewer.prev" ng-click="metaMediaViewer.setMedia(false,-1)">
+                <div class="btnNav btnNav-left">
+                    <i class="fa fa-arrow-left"></i>
+                </div>
+            </div>
+            <div class="box-btnNav box-btnNav-right" ng-if="metaMediaViewer.next" ng-click="metaMediaViewer.setMedia(false,1)">
+                <div class="btnNav btnNav-right">
+                    <i class="fa fa-arrow-right"></i>
+                </div>
+            </div>-->
+            <div class="content-view content-grid" ng-if="metaMediaViewer.view==='grid'" detect-scroll-end>
+                <div class="box-grid-page" ng-repeat="media in metaMediaViewer.mediasGrid track by $index" ng-click="metaMediaViewer.loadSingleMedia($index)">
+                    <div class="img-middle-responsive">
+                        <div class="responsive-container" >
+                            <div class="dummy"></div>
+                            <div class="img-container">
+                                <div class="centerer"></div>
+                                <img alt="{{media.label || media.title}}" title="{{media.label || media.title}}" ng-src="{{media.thumbnail}}" ng-right-click/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-grid-title" tooltips tooltip-template="{{media.label || media.title}}">{{media.label || media.title}}</div>
+                </div>  
+                <div class="custom-loader" ng-if="metaMediaViewer.showLoading">
+                    <div class="custom-spinner">
+                    <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-view content-single-page" ng-show="metaMediaViewer.view==='single-page' || metaMediaViewer.view==='single-zoom'" ng-right-click>
+                <div class="box-none" ng-if="metaMediaViewer.media.type && !metaMediaViewer.checkSupportedMedia(metaMediaViewer.media.type)">
+                    <h3>Tipo di media non supportato</h3>
+                </div>
+                <div class="box-media" ng-show="metaMediaViewer.media.type==='IMAGE'">
+                    <div class="box-img" id="openseadragon1" ng-show="metaMediaViewer.view==='single-zoom'">
+                    </div>
+                    <div class="box-img-notile" style="height:{{metaMediaViewer.bodyHeight}}px" ng-show="metaMediaViewer.view==='single-page'" ng-class="{'invisible':metaMediaViewer.loadingMedia}">
+                        <img alt="{{metaMediaViewer.media.label || metaMediaViewer.media.title}}" title="{{metaMediaViewer.media.label || metaMediaViewer.media.title}}" ng-class="{'draggable':metaMediaViewer.setZoom>1}" set-draggable ng-src="{{metaMediaViewer.media.url}}" class="rotate_{{metaMediaViewer.rotate.status}}"/>
+                    </div>
+                </div>
+                <div class="box-media" ng-if="metaMediaViewer.media.type==='AUDIO' || metaMediaViewer.media.type==='VIDEO'">
+                    <div class="box-multimedia" ng-class="{'invisible':metaMediaViewer.loadingMedia}">
+                        <meta-media-viewer medias="[metaMediaViewer.media]" options="metaMediaViewer.mediaViewerOptions"></meta-media-viewer>
+                    </div>
+                </div>
+            </div>
+            <div class="content-view content-double-page" ng-if="metaMediaViewer.view==='double-page'" ng-right-click>
+                <div class="box-double-img img-container-left">
+                    <div class="img-middle-responsive">
+                        <div class="responsive-container" style="height:{{metaMediaViewer.bodyHeight}}px">
+                            <div class="dummy"></div>
+                            <div class="img-container">
+                                <div class="centerer"></div>
+                                <img ng-if="metaMediaViewer.doubleMedia[0].type==='IMAGE'" alt="{{metaMediaViewer.doubleMedia[0].label || metaMediaViewer.doubleMedia[0].title}}" title="{{metaMediaViewer.doubleMedia[0].label || metaMediaViewer.doubleMedia[0].title}}" ng-src="{{metaMediaViewer.doubleMedia[0].url}}" />
+                                <div class="mmv-container">
+                                    <meta-media-viewer ng-if="metaMediaViewer.doubleMedia[0].type==='AUDIO' || metaMediaViewer.doubleMedia[0].type==='VIDEO'" medias="[metaMediaViewer.doubleMedia[0]]" options="metaMediaViewer.mediaViewerOptions"></meta-media-viewer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-double-img img-container-right">
+                    <div class="img-middle-responsive">
+                        <div class="responsive-container" style="height:{{metaMediaViewer.bodyHeight}}px">
+                            <div class="dummy"></div>
+                            <div class="img-container">
+                                <div class="centerer"></div>
+                                <img ng-if="metaMediaViewer.doubleMedia[1].type==='IMAGE'" alt="{{metaMediaViewer.doubleMedia[1].label || metaMediaViewer.doubleMedia[1].title}}"
+                                    title="{{metaMediaViewer.doubleMedia[1].label || metaMediaViewer.doubleMedia[1].title}}" ng-src="{{metaMediaViewer.doubleMedia[1].url}}"
+                                />
+                                <div class="mmv-container">
+                                    <meta-media-viewer ng-if="metaMediaViewer.doubleMedia[1].type==='AUDIO' || metaMediaViewer.doubleMedia[1].type==='VIDEO'"
+                                        medias="[metaMediaViewer.doubleMedia[1]]" options="metaMediaViewer.mediaViewerOptions"></meta-media-viewer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-view content-rullo" afkl-image-container ng-if="metaMediaViewer.view==='rullo'" ng-right-click>
+                <div ng-repeat="media in metaMediaViewer.medias">
+                    <div lazy-img afkl-lazy-image="{{media.url}}"
+                         afkl-lazy-image-options="metaMediaViewer.lazyOptions"
+                         class="box-rullo-img" ></div>
+                </div>
+                <div class="lazy-space"></div>
+            </div>
+            <div class="content-pagination" 
+                ng-if="!metaMediaViewer.pagination.position || metaMediaViewer.paginationPosition==='footer'"
+                ng-class="{'content-pagination-double': metaMediaViewer.view==='double-page'}">
+                <pagination-component></pagination-component>
+            </div>
+        </div>
+    </div>
+    <div class="content-modal-ecommerce" ng-if="metaMediaViewer.showEcommerce">
+        <iframe frameborder="0" src="{{metaMediaViewer.iframeEcommerceUrl}}"></iframe>
+    </div>
+</div>

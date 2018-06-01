@@ -1,0 +1,45 @@
+<div class="block-pagination" 
+    ng-show="metaMediaViewer.view==='single-page' || metaMediaViewer.view==='single-zoom' || metaMediaViewer.view==='double-page'" 
+    ng-if="!metaMediaViewer.singleMetadato">
+        <div class="box-pages" ng-if="metaMediaViewer.pages.showBox">
+            <div class="box-page" ng-repeat="media in metaMediaViewer.medias" ng-click="metaMediaViewer.pages.goTo($index+1)">
+                <!--<span>pag.</span>
+                <span class="separator">|</span>-->
+                <span>{{media.label || "pag. " + ($index+1)}}</span>
+            </div>
+        </div>
+        <div class="box-pagination">
+            <div class="box-inline btn-nav btn-first" 
+            ng-click="metaMediaViewer.pages.goToFirst()"
+            ng-class="{'disabled':metaMediaViewer.loadingMedia}">
+                <i class="icon-vw-angle-double-left"></i>
+            </div>
+            <div class="box-inline btn-nav btn-previous" ng-class="{'not-visible': !metaMediaViewer.prev, 'disabled':metaMediaViewer.loadingMedia}" 
+            ng-click="metaMediaViewer.pages.goPrevious()">
+                <i class="icon-vw-angle-left"></i>
+            </div>
+            <div class="box-inline box-current-page" 
+                ng-click="metaMediaViewer.pages.viewBox()"
+                ng-class="{'box-current-page-double': metaMediaViewer.view==='double-page'}">
+                <!--<span>pag.</span>
+                <span class="separator">|</span>-->
+                <span class="label-current-page">{{metaMediaViewer.media.label || "pag. " + metaMediaViewer.currentMedia}}</span> 
+                <span class="label-current-page" ng-if="metaMediaViewer.view==='double-page'">{{metaMediaViewer.doubleMedia[1].label || "pag. " + metaMediaViewer.currentMedia+1}}</span> 
+                <span class="icon-arrow fa" 
+                    ng-class="{
+                        'icon-vw-arrow-down': ((!metaMediaViewer.pagination.arrowsDirection || metaMediaViewer.pagination.arrowsDirection === 'top') && metaMediaViewer.pages.showBox) || (metaMediaViewer.pagination.arrowsDirection === 'bottom' && !metaMediaViewer.pages.showBox), 
+                        'icon-vw-arrow-up': ((!metaMediaViewer.pagination.arrowsDirection || metaMediaViewer.pagination.arrowsDirection === 'top') && !metaMediaViewer.pages.showBox) || (metaMediaViewer.pagination.arrowsDirection === 'bottom' && metaMediaViewer.pages.showBox)
+                    }"
+                ></span>
+            </div>
+            <div class="box-inline btn-nav btn-next" ng-class="{'not-visible': !metaMediaViewer.next, 'disabled':metaMediaViewer.loadingMedia}" 
+            ng-click="metaMediaViewer.pages.goNext()">
+                <i class="icon-vw-angle-right"></i>
+            </div>
+            <div class="box-inline btn-nav btn-last" 
+            ng-click="metaMediaViewer.pages.goToLast()"
+            ng-class="{'disabled':metaMediaViewer.loadingMedia}">
+                <i class="icon-vw-angle-double-right"></i>
+            </div>
+        </div>
+    </div>
