@@ -1,13 +1,13 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('metaViewerFe', [
-      'ngAnimate', 
-      'ngTouch', 
-      'ngSanitize', 
-      'ngMessages', 
-      'ngAria', 
+      'ngAnimate',
+      'ngTouch',
+      'ngSanitize',
+      'ngMessages',
+      'ngAria',
       'ngResource',
       'ui.router',
       'utilsMdl',
@@ -20,6 +20,6 @@
       'nsPopover',
       'metaMediaViewerMdl',
       'mrFeedbackMdl'
-  ]);
+    ]);
 
 })();

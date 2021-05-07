@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function MainController($state) {
-        var render = function(){
+        var render = function () {
             $state.go("main.viewer");
         };
         render();

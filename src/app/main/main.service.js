@@ -1,5 +1,5 @@
 /* global METAFAD_VIEWER_CONFIG */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,8 +7,8 @@
         .service('MainService', MainService);
 
     /** @ngInject */
-    function MainService($resource,$window) {
-        var vm = this; 
+    function MainService($resource, $window) {
+        var vm = this;
         vm.serviceProvider = $resource(METAFAD_VIEWER_CONFIG.serverRoot + "/" + ':service/:resource1/:element1', {
             service: '@service',
             resource1: '@resource1',
@@ -26,22 +26,22 @@
                 isArray: true
             }
         });
-        vm.getAppHeight = function(){
+        vm.getAppHeight = function () {
             var height;
-            if(!METAFAD_VIEWER_CONFIG.externalHeight ){
+            if (!METAFAD_VIEWER_CONFIG.externalHeight) {
                 var top = angular.element(".viewer")[0].getBoundingClientRect().top;
-                height = $window.innerHeight-top;
+                height = $window.innerHeight - top;
             }
-            else{
+            else {
                 height = METAFAD_VIEWER_CONFIG.viewerHeigh;
             }
             return height;
         };
         var _itemInPage = 24;
-        vm.setItemInPage = function(item){  
-            _itemInPage=item;
+        vm.setItemInPage = function (item) {
+            _itemInPage = item;
         };
-        vm.getItemInPage = function(){  
+        vm.getItemInPage = function () {
             return _itemInPage;
         };
     }

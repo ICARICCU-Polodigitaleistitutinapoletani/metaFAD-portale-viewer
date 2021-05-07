@@ -21,8 +21,8 @@
     "angular-endless-scroll": "0.1.0",
     "angular-tooltips": "^1.1.7",
     "angular-truncate": "*",
-    "nsPopover":"0.6.8",
-    "jquery.panzoom":"3.2.2",
+    "nsPopover": "0.6.8",
+    "jquery.panzoom": "3.2.2",
     "metaMediaViewer": "^0.3.7",
     "mrFeedback": "^0.3.1"
   },
